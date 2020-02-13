@@ -24,12 +24,12 @@ npm i @eosrio/node-abieos --save
 
 CommonJS
 ```js
-const nodeAbieos = require('node-abieos');
+const nodeAbieos = require('@eosrio/node-abieos');
 ```
 
 ES Modules
 ```typescript
-import * as nodeAbieos from "node-abieos";
+import * as nodeAbieos from "@eosrio/node-abieos";
 ```
 
 Check the [/examples](https://github.com/eosrio/node-abieos/tree/master/examples) folder for implementation examples
