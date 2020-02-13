@@ -16,10 +16,5 @@
   "bugs": {
     "url": "https://github.com/eosrio/node-abieos/issues"
   },
-  "homepage": "https://github.com/eosrio/node-abieos#readme",
-  "devDependencies": {
-    "eosjs": "^21.0.1-rc2",
-    "node-addon-api": "^2.0.0",
-    "node-gyp": "^6.1.0"
-  }
+  "homepage": "https://github.com/eosrio/node-abieos#readme"
 }
