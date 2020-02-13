@@ -18,6 +18,9 @@ abieos_context* abieos_create();
 // Destroy a context.
 void abieos_destroy(abieos_context* context);
 
+// Delete a contract from context
+abieos_bool abieos_delete_contract(abieos_context* context, uint64_t contract);
+
 // Get last error. Never returns null. The context owns the returned string.
 const char* abieos_get_error(abieos_context* context);
 

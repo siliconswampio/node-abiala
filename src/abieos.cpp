@@ -4,6 +4,7 @@
 #include "abieos.hpp"
 
 #include <memory>
+#include <iostream>
 
 inline const bool catch_all = true;
 
@@ -55,6 +56,16 @@ extern "C" abieos_context* abieos_create() {
         if (!catch_all)
             throw;
         return nullptr;
+    }
+}
+
+extern "C" abieos_bool abieos_delete_contract(abieos_context* context, uint64_t contract) {
+    auto itr = context->contracts.find(::abieos::name{contract});
+    if(itr == context->contracts.end()) {
+        return false;
+    } else {
+        context->contracts.erase(itr);
+        return true;
     }
 }
 
@@ -117,7 +128,7 @@ extern "C" abieos_bool abieos_set_abi(abieos_context* context, uint64_t contract
                 set_error(context, std::move(error));
             return false;
         }
-        context->contracts.insert({name{contract}, std::move(c)});
+        context->contracts.insert_or_assign(name{contract}, std::move(c));
         return true;
     });
 }
@@ -143,7 +154,7 @@ extern "C" abieos_bool abieos_set_abi_bin(abieos_context* context, uint64_t cont
                 set_error(context, std::move(error));
             return false;
         }
-        context->contracts.insert({name{contract}, std::move(c)});
+        context->contracts.insert_or_assign(name{contract}, std::move(c));
         return true;
     });
 }
@@ -268,8 +279,6 @@ extern "C" const char* abieos_bin_to_json(abieos_context* context, uint64_t cont
                 set_error(context, std::move(error));
             return nullptr;
         }
-        if (bin.pos != bin.end)
-            throw std::runtime_error("Extra data");
         return context->result_str.c_str();
     });
 }
