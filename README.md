@@ -54,9 +54,7 @@ if (nodeAbieos.load_abi("0", base_abi)) {
 
 env setup instructions soon
 ```bash
-node-gyp rebuild
+git clone https://github.com/eosrio/node-abieos.git
+cd node-abieos
+npm run build
 ```
-
-### License
-
-[MIT](./LICENSE)
