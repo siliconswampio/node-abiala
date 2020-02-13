@@ -5,6 +5,7 @@
   "main": "abieos.js",
   "typings": "abieos.d.ts",
   "scripts": {
+    "install": "node -e 'process.exit(0)'",
     "build": "node-gyp rebuild && cp build/Release/abieos.node dist/abieos.node"
   },
   "repository": {
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/eosrio/node-abieos/issues"
   },
-  "homepage": "https://github.com/eosrio/node-abieos#readme"
+  "homepage": "https://github.com/eosrio/node-abieos#readme",
+  "os": [
+    "linux"
+  ]
 }
