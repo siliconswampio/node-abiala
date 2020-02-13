@@ -32,23 +32,7 @@ ES Modules
 import * as nodeAbieos from "node-abieos";
 ```
 
-Basic Example
-```js
-
-// abort if not on linux
-if(!nodeAbieos) {
-    console.log('platform not supported');
-    process.exit();
-}
-
-// Load initial abi with types on contract "0"
-const base_abi = fs.readFileSync('./eosio.json').toString();
-if (nodeAbieos.load_abi("0", base_abi)) {
-    console.log('abi loaded');
-} else {
-    console.log('error loading abi')
-}
-```
+Check the `examples` folder for implementation examples
 
 ### Building
 
