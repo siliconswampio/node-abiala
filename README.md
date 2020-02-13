@@ -17,7 +17,7 @@ Made with ♥ by [EOS Rio](https://eosrio.io/)
 ### Install
 
 ```
-
+npm install --save eosrio/node-abieos#1.0.1
 ```
 
 ### Usage
