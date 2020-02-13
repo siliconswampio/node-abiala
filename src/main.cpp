@@ -13,25 +13,18 @@ using namespace std;
 
 abieos_context* global_context;
 
-std::string json_to_hex(const char *contract_name, const char *type, const char *json, const char *abi)
+std::string json_to_hex(const char *contract_name, const char *type, const char *json)
 {
     if(global_context == nullptr) {
         global_context = abieos_create();
     }
     uint64_t contract = abieos_string_to_name(global_context, contract_name);
-    bool abi_status = abieos_set_abi(global_context, contract, abi);
-    if(!abi_status)
-    {
-        std::cout << abieos_get_error(global_context) << "\n";
-        return "ABI_ERROR";
-    }
     bool status = abieos_json_to_bin(global_context, contract, type, json);
     if(!status)
     {
         std::cout << abieos_get_error(global_context) << "\n";
         return "PARSING_ERROR";
     }
-
     auto results = abieos_get_bin_hex(global_context);
     if(results == nullptr)
     {
@@ -76,8 +69,7 @@ Napi::String JsonToHexWrapped(const Napi::CallbackInfo &info)
     std::string contract_name = info[0].As<Napi::String>().Utf8Value();
     std::string type = info[1].As<Napi::String>().Utf8Value();
     std::string json = info[2].As<Napi::String>().Utf8Value();
-    std::string abi = info[3].As<Napi::String>().Utf8Value();
-    auto returnValue = json_to_hex(&contract_name[0u], &type[0u], &json[0u], &abi[0u]);
+    auto returnValue = json_to_hex(&contract_name[0u], &type[0u], &json[0u]);
     return Napi::String::New(env, returnValue);
 }
 
