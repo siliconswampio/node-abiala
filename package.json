@@ -1,6 +1,6 @@
 {
   "name": "@eosrio/node-abieos",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node Bindings for abieos: Binary <> JSON conversion using ABIs.",
   "main": "abieos.js",
   "typings": "abieos.d.ts",
@@ -18,9 +18,6 @@
     "url": "https://github.com/eosrio/node-abieos/issues"
   },
   "homepage": "https://github.com/eosrio/node-abieos#readme",
-  "os": [
-    "linux"
-  ],
   "dependencies": {},
   "devDependencies": {}
 }
