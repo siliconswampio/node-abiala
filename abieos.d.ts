@@ -1,7 +1,7 @@
 declare namespace abieos {
     function string_to_name(name_string: string): BigInteger;
 
-    function json_to_hex(contract_name: string, type: string, json: string, abi: string): string;
+    function json_to_hex(contract_name: string, type: string, json: string | object): string;
 
     function hex_to_json(contract_name: string, type: string, hex: string): string;
 
