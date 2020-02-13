@@ -16,8 +16,8 @@ Made with ♥ by [EOS Rio](https://eosrio.io/)
 
 ### Install
 
-```
-npm install --save eosrio/node-abieos#1.0.1
+```shell script
+npm i @eosrio/node-abieos --save
 ```
 
 ### Usage
@@ -53,7 +53,7 @@ if (nodeAbieos.load_abi("0", base_abi)) {
 ### Building
 
 env setup instructions soon
-```bash
+```shell script
 git clone https://github.com/eosrio/node-abieos.git
 cd node-abieos
 npm run build
