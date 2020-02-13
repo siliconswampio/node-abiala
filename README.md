@@ -32,7 +32,7 @@ ES Modules
 import * as nodeAbieos from "node-abieos";
 ```
 
-Check the `examples` folder for implementation examples
+Check the [/examples](https://github.com/eosrio/node-abieos/tree/master/examples) folder for implementation examples
 
 ### Building
 
