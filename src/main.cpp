@@ -1,5 +1,6 @@
-#define NAPI_VERSION 4
+#define NAPI_VERSION 6
 #define NAPI_EXPERIMENTAL
+
 #include <napi.h>
 #include <napi-inl.h>
 
