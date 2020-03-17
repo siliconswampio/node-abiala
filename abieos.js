@@ -24,14 +24,14 @@ if (process.platform === 'linux') {
         },
         bin_to_json: (contract_name, type, buffer) => {
             const data = abieos.bin_to_json(contract_name, type, buffer);
-            if (data) {
+            if (data[0] === '{' || data[0] === '[') {
                 try {
                     return JSON.parse(data);
                 } catch (e) {
-                    throw new Error('failed to parse json string: ' + data);
+                    throw new Error('json parse error');
                 }
             } else {
-                throw new Error('failed to parse bin data');
+                throw new Error(data);
             }
         },
         load_abi: abieos.load_abi,
