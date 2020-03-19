@@ -44,7 +44,14 @@ if (process.platform === 'linux') {
                 return result;
             }
         },
-        get_type_for_table: abieos.get_type_for_table,
+        get_type_for_table: (contract_name, table_name) => {
+            const result = abieos.get_type_for_table(contract_name, table_name);
+            if (result === 'NOT_FOUND') {
+                throw new Error('table ' + table_name + ' not found on contract ' + contract_name);
+            } else {
+                return result;
+            }
+        },
         delete_contract: abieos.delete_contract,
     };
 } else {
