@@ -58,6 +58,16 @@ extern "C" abieos_context* abieos_create() {
     }
 }
 
+extern "C" abieos_bool abieos_delete_contract(abieos_context* context, uint64_t contract) {
+    auto itr = context->contracts.find(::abieos::name{contract});
+    if(itr == context->contracts.end()) {
+        return false;
+    } else {
+        context->contracts.erase(itr);
+        return true;
+    }
+}
+
 extern "C" void abieos_destroy(abieos_context* context) { delete context; }
 
 extern "C" const char* abieos_get_error(abieos_context* context) {
@@ -111,7 +121,7 @@ extern "C" abieos_bool abieos_set_abi(abieos_context* context, uint64_t contract
             return set_error(context, std::move(error));
         abieos::abi c;
         convert(def, c);
-        context->contracts.insert({name{contract}, std::move(c)});
+        context->contracts.insert_or_assign(name{contract}, std::move(c));
         return true;
     });
 }
@@ -132,7 +142,7 @@ extern "C" abieos_bool abieos_set_abi_bin(abieos_context* context, uint64_t cont
         from_bin(def, stream);
         abieos::abi c;
         convert(def, c);
-        context->contracts.insert({name{contract}, std::move(c)});
+        context->contracts.insert_or_assign(name{contract}, std::move(c));
         return true;
     });
 }
