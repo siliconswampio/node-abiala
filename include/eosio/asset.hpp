@@ -1,9 +1,9 @@
 #pragma once
 
-#include <eosio/chain_conversions.hpp>
-#include <eosio/check.hpp>
-#include <eosio/reflection.hpp>
-#include <eosio/symbol.hpp>
+#include "chain_conversions.hpp"
+#include "check.hpp"
+#include "reflection.hpp"
+#include "symbol.hpp"
 
 #include <limits>
 #include <tuple>
@@ -156,6 +156,7 @@ struct asset {
     * @return asset - Reference to this asset
     * @post The amount of this asset is multiplied by a
     */
+#ifndef ABIEOS_NO_INT128
    asset& operator*=(int64_t a) {
       __int128 tmp = (__int128)amount * (__int128)a;
       eosio::check(tmp <= max_amount, "multiplication overflow");
@@ -163,6 +164,7 @@ struct asset {
       amount = (int64_t)tmp;
       return *this;
    }
+#endif
 
    /**
     * Multiplication operator, with a number proceeding
@@ -172,11 +174,13 @@ struct asset {
     * @param b - The multiplier for the asset's amount
     * @return asset - New asset as the result of multiplication
     */
+#ifndef ABIEOS_NO_INT128
    friend asset operator*(const asset& a, int64_t b) {
       asset result = a;
       result *= b;
       return result;
    }
+#endif
 
    /**
     * Multiplication operator, with a number preceeding
@@ -185,11 +189,13 @@ struct asset {
     * @param b - The asset to be multiplied
     * @return asset - New asset as the result of multiplication
     */
+#ifndef ABIEOS_NO_INT128
    friend asset operator*(int64_t b, const asset& a) {
       asset result = a;
       result *= b;
       return result;
    }
+#endif
 
    /**
     * @brief Division assignment operator, with a number
@@ -328,26 +334,24 @@ struct asset {
 EOSIO_REFLECT(asset, amount, symbol);
 
 template <typename S>
-inline result<void> from_string(asset& result, S& stream) {
+inline void from_string(asset& result, S& stream) {
    int64_t  amount;
    uint64_t sym;
-   if (!eosio::string_to_asset(amount, sym, stream.pos, stream.end, true))
-      return eosio::stream_error::invalid_asset_format;
+   check(eosio::string_to_asset(amount, sym, stream.pos, stream.end, true),
+      convert_stream_error(eosio::stream_error::invalid_asset_format));
    result = asset{ amount, symbol{ sym } };
-   return eosio::outcome::success();
 }
 
 template <typename S>
-result<void> to_json(const asset& obj, S& stream) {
-   return to_json(asset_to_string(obj.amount, obj.symbol.value), stream);
+void to_json(const asset& obj, S& stream) {
+   to_json(asset_to_string(obj.amount, obj.symbol.value), stream);
 }
 
 template <typename S>
-result<void> from_json(asset& obj, S& stream) {
-   OUTCOME_TRY(s, stream.get_string());
-   if (!string_to_asset(obj.amount, obj.symbol.value, s.data(), s.data() + s.size()))
-      return eosio::from_json_error::expected_symbol_code;
-   return eosio::outcome::success();
+void from_json(asset& obj, S& stream) {
+   auto s = stream.get_string();
+   check(string_to_asset(obj.amount, obj.symbol.value, s.data(), s.data() + s.size()),
+      convert_json_error(eosio::from_json_error::expected_symbol_code));
 }
 
 /**
