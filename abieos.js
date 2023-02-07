@@ -11,6 +11,7 @@ if (process.platform === 'linux') {
         },
         string_to_name: abieos.string_to_name,
         hex_to_json: (contract_name, type, hex) => {
+            console.log("-------------------HEX_TO_JSON-------------------")
             const data = abieos.hex_to_json(contract_name, type, hex);
             if (data) {
                 try {
@@ -23,6 +24,7 @@ if (process.platform === 'linux') {
             }
         },
         bin_to_json: (contract_name, type, buffer) => {
+            console.log("-------------------BIN_TO_JSON-------------------")
             const data = abieos.bin_to_json(contract_name, type, buffer);
             if (data[0] === '{' || data[0] === '[') {
                 try {
