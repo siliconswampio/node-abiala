@@ -26,10 +26,13 @@ if (process.platform === 'linux') {
         bin_to_json: (contract_name, type, buffer) => {
             console.log("-------------------BIN_TO_JSON-------------------")
             const data = abieos.bin_to_json(contract_name, type, buffer);
+            console.log("DATA: ", data)
             if (data[0] === '{' || data[0] === '[') {
                 try {
+                    console.log("-------------------FINISH-BIN_TO_JSON-------------------")
                     return JSON.parse(data);
                 } catch (e) {
+                    console.log("FAILED-BIN_TO_JSON: ", e.message)
                     throw new Error('json parse error');
                 }
             } else {
